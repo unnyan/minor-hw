@@ -82070,6 +82070,20 @@
     "scope": null
   },
   {
+    "ID": "c:rccfieldvalues.hpp@386@macro@RCCENUMS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "RCCENUMS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\FieldValues\\rccfieldvalues.hpp"
+    },
+    "name": "RCCENUMS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:@ST>5#T#Ni#Ni#T#T@RCC_CR_PLLI2SRDY_Values",
     "What": "ClassTemplate",
     "defdec": "Def",
@@ -88809,6 +88823,20 @@
     "scope": null
   },
   {
+    "ID": "c:gpioafieldvalues.hpp@392@macro@GPIOAENUMS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "GPIOAENUMS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\FieldValues\\gpioafieldvalues.hpp"
+    },
+    "name": "GPIOAENUMS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:@ST>5#T#Ni#Ni#T#T@GPIOA_MODER_MODER15_Values",
     "What": "ClassTemplate",
     "defdec": "Def",
@@ -93721,6 +93749,20 @@
     "scope": null
   },
   {
+    "ID": "c:gpioaregisters.hpp@372@macro@GPIOAREGISTERS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "GPIOAREGISTERS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\gpioaregisters.hpp"
+    },
+    "name": "GPIOAREGISTERS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:gpioaregisters.hpp@362@macro@GPIOAREGISTERS_HPP",
     "What": "MacroDef",
     "defdec": "Def",
@@ -96609,6 +96651,20 @@
     "scope": null
   },
   {
+    "ID": "c:gpiocregisters.hpp@372@macro@GPIOCREGISTERS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "GPIOCREGISTERS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\gpiocregisters.hpp"
+    },
+    "name": "GPIOCREGISTERS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:@S@GPIOC",
     "What": "Struct",
     "defdec": "Def",
@@ -99465,6 +99521,20 @@
       }
     ],
     "name": "GPIOC",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:gpiocfieldvalues.hpp@392@macro@GPIOCENUMS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "GPIOCENUMS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\FieldValues\\gpiocfieldvalues.hpp"
+    },
+    "name": "GPIOCENUMS_HPP",
     "origin": "user_include",
     "scope": null
   },
@@ -104210,6 +104280,20 @@
     "scope": null
   },
   {
+    "ID": "c:rccregisters.hpp@371@macro@RCCREGISTERS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "RCCREGISTERS_HPP",
+    "location": {
+      "column": "9",
+      "line": "11",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\STM32F411\\rccregisters.hpp"
+    },
+    "name": "RCCREGISTERS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:rccregisters.hpp@361@macro@RCCREGISTERS_HPP",
     "What": "MacroDef",
     "defdec": "Def",
@@ -107825,6 +107909,20 @@
         "scope": "FieldValueBase"
       },
       {
+        "ID": "c:fieldvaluebase.hpp@1015@ST>3#T#T#N^type-parameter-0-0::Register:::Type@FieldValueBase@FT@>2#T#TSet#v#S@newRegValue",
+        "What": "VarDecl",
+        "defdec": "Def",
+        "display": "newRegValue",
+        "location": {
+          "column": "13",
+          "line": "24",
+          "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\fieldvaluebase.hpp"
+        },
+        "name": "newRegValue",
+        "origin": "user_include",
+        "scope": "FieldValueBase"
+      },
+      {
         "ID": "c:fieldvaluebase.hpp@992@ST>3#T#T#N^type-parameter-0-0::Register:::Type@FieldValueBase@FT@>2#T#TSet#v#S@newRegValue",
         "What": "VarDecl",
         "defdec": "Def",
@@ -107967,6 +108065,20 @@
         "scope": "Register"
       },
       {
+        "ID": "c:register.hpp@4161@ST>5#Ni#Ni#T#T#pT@Register@FT@>2#T#TGetIndividualMask# #S@result",
+        "What": "VarDecl",
+        "defdec": "Def",
+        "display": "result",
+        "location": {
+          "column": "24",
+          "line": "77",
+          "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\register.hpp"
+        },
+        "name": "result",
+        "origin": "user_include",
+        "scope": "Register"
+      },
+      {
         "ID": "c:@ST>5#Ni#Ni#T#T#pT@Register@F@GetMask#S",
         "What": "CXXMethod",
         "defdec": "Def",
@@ -107991,6 +108103,20 @@
           "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\register.hpp"
         },
         "name": "GetIndividualValue",
+        "origin": "user_include",
+        "scope": "Register"
+      },
+      {
+        "ID": "c:register.hpp@5394@ST>5#Ni#Ni#T#T#pT@Register@FT@>2#T#TGetIndividualValue# #S@result",
+        "What": "VarDecl",
+        "defdec": "Def",
+        "display": "result",
+        "location": {
+          "column": "24",
+          "line": "95",
+          "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\AHardware\\Registers\\register.hpp"
+        },
+        "name": "result",
         "origin": "user_include",
         "scope": "Register"
       },
@@ -108577,6 +108703,34 @@
     "scope": null
   },
   {
+    "ID": "c:susudefs.hpp@88@macro@REGISTERS_SUSUDEFS_HPP",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "REGISTERS_SUSUDEFS_HPP",
+    "location": {
+      "column": "9",
+      "line": "6",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\Common\\susudefs.hpp"
+    },
+    "name": "REGISTERS_SUSUDEFS_HPP",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:susudefs.hpp@190@macro@__forceinline",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "__forceinline",
+    "location": {
+      "column": "9",
+      "line": "12",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\Common\\susudefs.hpp"
+    },
+    "name": "__forceinline",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:susudefs.hpp@179@macro@__forceinline",
     "What": "MacroDef",
     "defdec": "Def",
@@ -108587,6 +108741,20 @@
       "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\Common\\susudefs.hpp"
     },
     "name": "__forceinline",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:susudefs.hpp@266@macro@__flashdata",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "__flashdata",
+    "location": {
+      "column": "9",
+      "line": "15",
+      "path": "C:\\Users\\anyta\\OneDrive\\\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b\\minor-labs\\Lab1\\Lab1\\Common\\susudefs.hpp"
+    },
+    "name": "__flashdata",
     "origin": "user_include",
     "scope": null
   },
