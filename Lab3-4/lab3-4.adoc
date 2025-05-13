@@ -1,0 +1,208 @@
+= Лабораторная работа №3,4
+Автор: Дидык А.Н. (ЕТ-213)
+:toc:
+:toc-title: Оглавление
+
+== Принцип Single Responsibility (одна ответственность)
+
+Принцип *Single Responsibility* означает, что каждый кусочек кода (например, класс) должен отвечать только за одну вещь. Это делает программу проще, понятнее и легче в поддержке.
+
+Например, если мы пишем программу для светофора, один класс должен отвечать за включение лампочек, а другой — за переключение цветов. Если всё в одном месте — будет путаница и ошибки.
+
+== Управление светодиодами через указатели
+
+На занятии мы учились включать светодиоды по очереди — как гирлянда на ёлке: LED1, LED2, LED3, LED4, потом выключаем их в том же порядке.
+
+Для этого мы напрямую обращались к адресам памяти и использовали маски битов:
+
+[source, cpp]
+----
+const uint32_t maskBit5 = (1U << 5);
+const uint32_t maskBit8 = (1U << 8);
+const uint32_t maskBit9 = (1U << 9);
+
+uint32_t* gpioC = reinterpret_cast<uint32_t*>(0x40020814);
+uint32_t* gpioA = reinterpret_cast<uint32_t*>(0x40020014);
+
+for (;;) {
+    *gpioA |= maskBit5;
+    delay(1000000);
+    *gpioC |= maskBit9;
+    delay(1000000);
+    *gpioC |= maskBit8;
+    delay(1000000);
+    *gpioC |= maskBit5;
+    delay(1000000);
+
+    *gpioA &= ~maskBit5;
+    delay(1000000);
+    *gpioC &= ~maskBit9;
+    delay(1000000);
+    *gpioC &= ~maskBit8;
+    delay(1000000);
+    *gpioC &= ~maskBit5;
+    delay(1000000);
+
+    return 1;
+}
+----
+
+Этот код работает, но он неудобный. Если добавятся новые светодиоды — всё придётся переписывать.
+
+== Использование классов для управления светодиодами
+
+Чтобы сделать код проще и гибче, создаём класс `Led`. Он умеет включать, выключать и переключать светодиоды.
+
+[source, cpp]
+----
+class ILed {
+    virtual void Light() = 0;
+    virtual void Off() = 0;
+    virtual void Toggle() = 0;
+};
+
+class Led : public ILed {
+public:
+    Led(uint32_t addr, uint32_t bit) : registerAddr(addr), pinNum(bit) {}
+
+    void Light() override {
+        *reinterpret_cast<uint32_t*>(registerAddr) |= (1 << pinNum);
+    }
+
+    void Off() override {
+        *reinterpret_cast<uint32_t*>(registerAddr) &= ~(1 << pinNum);
+    }
+
+    void Toggle() override {
+        *reinterpret_cast<uint32_t*>(registerAddr) ^= (1 << pinNum);
+    }
+
+private:
+    uint32_t registerAddr;
+    uint32_t pinNum;
+};
+----
+
+Теперь создаём массив из светодиодов и легко управляем ими:
+
+[source, cpp]
+----
+Led led1(gpioaOdrRegAddres, 5);
+Led led2(gpiocOdrRegAddres, 9);
+Led led3(gpiocOdrRegAddres, 8);
+Led led4(gpiocOdrRegAddres, 5);
+
+std::array<Led*, 4> leds = {&led1, &led2, &led3, &led4};
+
+for (;;) {
+    for (auto it : leds) {
+        it->Toggle();
+        delay(1000000);
+    }
+    return 1;
+}
+----
+
+== Разные режимы работы светодиодов
+
+Создаём интерфейс IMode для разных режимов:
+
+[source, cpp]
+----
+class IMode {
+    virtual void Update() = 0;
+    virtual void Init() = 0;
+};
+----
+
+=== Режим "шахматка"
+
+[source, cpp]
+----
+class ChessMode : public IMode {
+public:
+    ChessMode(tLeds& ledsArr) : leds(ledsArr) {}
+
+    void Update() override {
+        for (auto it : leds) {
+            it->Toggle();
+        }
+    }
+
+    void Init() override {
+        for (auto it : leds) {
+            it->Light();
+        }
+        for (size_t i = 0; i < leds.size(); ++i) {
+            if (i % 2 == 0) {
+                leds[i]->Toggle();
+            }
+        }
+    }
+
+private:
+    tLeds& leds;
+};
+----
+
+=== Режим "все одновременно"
+
+[source, cpp]
+----
+class AllMode : public IMode {
+public:
+    AllMode(tLeds& ledsArr) : leds(ledsArr) {}
+
+    void Update() override {
+        for (auto it : leds) {
+            it->Toggle();
+        }
+    }
+
+    void Init() override {
+        for (auto it : leds) {
+            it->Light();
+        }
+    }
+
+private:
+    tLeds& leds;
+};
+----
+
+=== Режим "ёлочка"
+
+[source, cpp]
+----
+class TreeMode : public IMode {
+public:
+    TreeMode(tLeds& ledsArr) : leds(ledsArr), currentLedIndex(0) {}
+
+    void Update() override {
+        leds[currentLedIndex]->Toggle();
+        currentLedIndex++;
+        if (currentLedIndex >= leds.size()) {
+            currentLedIndex = 0;
+        }
+    }
+
+    void Init() override {
+        currentLedIndex = 0;
+        for (auto it : leds) {
+            it->Light();
+        }
+    }
+
+private:
+    tLeds& leds;
+    size_t currentLedIndex;
+};
+----
+
+== Вывод
+
+- Мы узнали, что такое принцип одной ответственности.
+- Сделали простой код для работы со светодиодами через указатели.
+- Улучшили его, используя классы.
+- Создали разные режимы работы светодиодов: все сразу, в шахматном порядке и "ёлочкой".
+- Теперь наш код проще читать, расширять и поддерживать.
