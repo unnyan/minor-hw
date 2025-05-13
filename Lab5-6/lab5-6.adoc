@@ -1,0 +1,232 @@
+
+= Лабораторная работа №5,6
+Автор: Дидык А.Н. (ЕТ-213)
+:toc:
+:toc-title: Оглавление
+
+== Организация проекта
+
+Раньше весь код был в `main.cpp`, но это неудобно. Лучше, когда каждый класс лежит в отдельном `.h` и `.cpp` файле. Так легче работать и пересобирать только то, что изменилось.
+
+Структура:
+- Классы светодиодов → папка `Leds`
+- Классы режимов → папка `Modes`
+- Интерфейсы → папка `Contracts`
+
+== Пример с классом Led
+
+Интерфейс `ILed.h`:
+[source, cpp]
+----
+#ifndef ILED_H
+#define ILED_H
+
+class ILed {
+public:
+  virtual void Light() = 0;
+  virtual void Switch() = 0;
+};
+
+#endif
+----
+
+Шаблонный класс `Led.h`:
+[source, cpp]
+----
+#ifndef LED_H
+#define LED_H
+
+#include "ILed.h"
+
+template<typename Tport, int pinNumber>
+class Led : public ILed {
+public:
+  void Light() override {
+    Tport::ODR::Set(1 << pinNumber);
+  }
+
+  void Switch() override {
+    Tport::ODR::Toggle(1 << pinNumber);
+  }
+};
+
+#endif
+----
+
+== Классы режимов
+
+Все режимы (все-вместе, шахматка, ёлочка) реализованы в виде `.h` и `.cpp` файлов.
+
+Пример — `ChessMode`:
+
+*chessMode.h*:
+[source, cpp]
+----
+#ifndef CHESSMODE_H
+#define CHESSMODE_H
+
+#include "LedConfig.h"
+#include "IMode.h"
+
+class ChessMode: public IMode {
+public:
+  ChessMode(tLeds& ledsArr);
+  void Update() override;
+  void Init() override;
+private:
+  tLeds& leds;
+};
+
+#endif
+----
+
+*chessMode.cpp*:
+[source, cpp]
+----
+#include "chessMode.h"
+
+ChessMode::ChessMode(tLeds& ledsArr) : leds(ledsArr) {}
+
+void ChessMode::Update() {
+  for (auto it : leds) {
+    it->Switch();
+  }
+}
+
+void ChessMode::Init() {
+  for (auto it : leds) it->Light();
+  for (size_t i = 0; i < leds.size(); ++i) {
+    if (i % 2 == 0) leds[i]->Switch();
+  }
+}
+----
+
+Остальные режимы (`AllMode`, `TreeMode`) делаются аналогично.
+
+== Класс ModeManager
+
+Класс управляет режимами: включает текущий, обновляет и переключает между ними.
+
+*IModeManager.h*:
+[source, cpp]
+----
+#ifndef IMODEMANAGER_H
+#define IMODEMANAGER_H
+
+class IModeManager {
+public:
+  virtual void InitCurrentMode() = 0;
+  virtual void UpdateCurrentMode() = 0;
+  virtual void SwitchMode() = 0;
+};
+
+#endif
+----
+
+*ModeManager.h*:
+[source, cpp]
+----
+#ifndef MODEMANAGER_H
+#define MODEMANAGER_H
+
+#include "IModeManager.h"
+#include "ModesConfig.h"
+
+class ModeManager : public IModeManager {
+public:
+  ModeManager(tMode& modes);
+  void InitCurrentMode() override;
+  void UpdateCurrentMode() override;
+  void SwitchMode() override;
+
+private:
+  tMode& modes;
+  std::uint8_t currentModeIndex;
+};
+
+#endif
+----
+
+*ModeManager.cpp*:
+[source, cpp]
+----
+#include "ModeManager.h"
+
+ModeManager::ModeManager(tMode& modeArr) : modes(modeArr), currentModeIndex(0) {}
+
+void ModeManager::InitCurrentMode() {
+  modes[currentModeIndex]->Init();
+}
+
+void ModeManager::UpdateCurrentMode() {
+  modes[currentModeIndex]->Update();
+}
+
+void ModeManager::SwitchMode() {
+  currentModeIndex = (currentModeIndex + 1) % 3;
+  modes[currentModeIndex]->Init();
+}
+----
+
+== Класс Button
+
+Позволяет отслеживать, была ли нажата кнопка:
+
+[source, cpp]
+----
+#ifndef BUTTON_H
+#define BUTTON_H
+
+#include "IButton.h"
+
+template<typename Tport, int pinNumber>
+class Button : public IButton {
+public:
+  bool IsPressed() override {
+    bool isNow = IsButtonPressed();
+    if (isNow && !lastButtonState) {
+      lastButtonState = true;
+      return true;
+    } else if (!isNow) {
+      lastButtonState = false;
+    }
+    return false;
+  }
+
+private:
+  bool IsButtonPressed() {
+    auto state = Tport::IDR::Get();
+    return ((state & (1 << pinNumber)) == 0);
+  }
+
+  bool lastButtonState = false;
+};
+
+#endif
+----
+
+== Проверка в main.cpp
+
+В `main.cpp` создаются:
+- светодиоды
+- режимы
+- `ModeManager`
+- кнопка
+
+При нажатии на кнопку — переключается режим. Код видно выше, он проверяет работу всех компонентов.
+
+== Тактирование
+
+Для работы МК нужна частота. Источники:
+- HSI (внутренний 16 МГц)
+- HSE (внешний 8 МГц)
+- PLL (настраиваемый)
+
+Выбирается через регистры `CR`, `CFGR`, `PLLCFGR`. Подсчёты показывают, что частота на выходе примерно 13.5 МГц при нужной настройке PLL.
+
+== Вывод
+
+- Структурировали проект.
+- Разбили код по файлам.
+- Реализовали управление режимами.
+- Изучили источники тактирования.
