@@ -1,0 +1,34 @@
+# === IDE и редакторы ===
+.idea/
+*.iml
+.vscode/
+
+# === Папки сборки и отладочные артефакты ===
+Debug/
+Debug/**/*
+# Можно добавить Release/, если у вас есть такая папка
+# Release/
+
+# === Служебные и временные файлы ===
+*.log
+*~
+.DS_Store
+Thumbs.db
+
+# === Компиляционные артефакты ===
+*.o
+*.obj
+*.elf
+*.exe
+*.bin
+*.hex
+
+# === CMake и Make ===
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# === Конфиги IDE ===
+settings/
+
